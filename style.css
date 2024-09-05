@@ -1,0 +1,17 @@
+body {
+    background-color: #2d1935;
+    color: #c7bfbf;
+}
+
+a,
+a:visited,
+a:hover {
+    color: #9878bc;
+    text-decoration: none;
+}
+
+.curseforge {
+    font-size: smaller;
+    position: relative;
+    top: -0.5em;
+}
