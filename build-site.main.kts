@@ -317,3 +317,100 @@ writePage("modpacks.html") {
 		}
 	}
 }
+
+writePage("mods.html") {
+	head {
+		meta(charset = "utf-8")
+		title(content = "My Mods")
+		link(rel = "icon", type = "image/png", href = "images/pfp.png")
+
+		ogName("aaronhowser.dev")
+		ogTitle("My Mods")
+		ogDescription("My mods")
+		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
+		ogUrl("https://aaronhowser.dev/my_mods")
+		ogType("website")
+
+		useStyleCss()
+	}
+
+	body {
+		navDiv()
+
+		div {
+			h1 { +"My Mods" }
+
+			fun UL.modLink(
+				name: String,
+				url: String,
+				description: String
+			) {
+				li {
+					a(href = url) { +name }
+					+": $description"
+				}
+			}
+
+			ul {
+
+				modLink(
+					name = "Genetics: Resequenced",
+					url = "https://www.curseforge.com/minecraft/mc-mods/genetics-resequenced",
+					description = "Get powers from mobs"
+				)
+
+				modLink(
+					name = "Irregular Implements",
+					url = "https://www.curseforge.com/minecraft/mc-mods/irregular-implements",
+					description = "A modern remake of Random Things"
+				)
+
+				modLink(
+					name = "Pitch Perfect",
+					url = "https://www.curseforge.com/minecraft/mc-mods/pitch-perfect",
+					description = "Instruments and an in-game music creator"
+				)
+
+				modLink(
+					name = "Ariadne's Thread",
+					url = "https://www.curseforge.com/minecraft/mc-mods/ariadnes-thread",
+					description = "Shows your path through the world"
+				)
+
+				modLink(
+					name = "LoFi Records to Mine To",
+					url = "https://www.curseforge.com/minecraft/mc-mods/lofi-records-to-mine-to",
+					description = "Dozens of new Music Discs"
+				)
+
+				modLink(
+					name = "No Potion Icons",
+					url = "https://www.curseforge.com/minecraft/mc-mods/no-potion-icons",
+					description = "No potion icons"
+				)
+
+				modLink(
+					name = "Aaron",
+					url = "https://www.curseforge.com/minecraft/mc-mods/aaron",
+					description = "Library mod for my other mods"
+				)
+			}
+
+			p { +"Mods in progress:" }
+
+			ul {
+				modLink(
+					name = "Paracosm",
+					url = "https://github.com/Berry-Club/Paracosm",
+					description = "A magic mod powered by Whimsy and childlike imagination!"
+				)
+
+				modLink(
+					name = "Quiverbow: Refletched",
+					url = "https://github.com/aaronhowser1/Quiverbow-Refletched",
+					description = "A modern remake of Quiverbow"
+				)
+			}
+		}
+	}
+}
