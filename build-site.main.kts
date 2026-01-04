@@ -472,8 +472,11 @@ writePage(videosPage) {
 			}
 
 			embedYoutube(videoId = "zp_S2Uwjb-M")
+			p {}
 			embedYoutube(videoId = "usGPK2hHomI")
+			p {}
 			embedYoutube(videoId = "9OHRtUHezTk")
+			p {}
 			embedYoutube(videoId = "ICNtItWYMNE")
 		}
 	}
