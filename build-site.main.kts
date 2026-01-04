@@ -47,6 +47,8 @@ fun FlowContent.navDiv() {
 			a(href = "modpacks.html") { +"My Modpacks" }
 			+" | "
 			a(href = "mods.html") { +"My Mods" }
+			+" | "
+			a(href = "videos.html") { +"Videos I've Worked On" }
 		}
 	}
 }
@@ -411,6 +413,61 @@ writePage("mods.html") {
 					description = "A modern remake of Quiverbow"
 				)
 			}
+		}
+	}
+}
+
+writePage("videos.html") {
+	head {
+		meta(charset = "utf-8")
+		title(content = "Homepage")
+		link(rel = "icon", type = "image/png", href = "images/pfp.png")
+
+		ogName("aaronhowser.dev")
+		ogTitle("My videos")
+		ogDescription("Videos I've worked on")
+		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
+		ogUrl("https://aaronhowser.dev")
+		ogType("website")
+
+		useStyleCss()
+	}
+
+	body {
+		navDiv()
+
+		div {
+			h1 { +"Videos I've Worked On" }
+
+			p {
+				+"I currently work for "
+				a(href = "https://www.youtube.com/@MrBeastGaming") { +"MrBeast Gaming" }
+				+", making custom mods for their videos. Here are the videos I've worked on:"
+			}
+
+			fun embedYoutube(
+				videoId: String,
+				width: Int = 560,
+				height: Int = 315
+			) {
+				div {
+					style = "text-align:center"
+					iframe {
+						this.width = width.toString()
+						this.height = height.toString()
+						this.src = "https://www.youtube.com/embed/$videoId"
+						attributes["title"] = "YouTube video player"
+						attributes["frameborder"] = "0"
+						attributes["allow"] = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						attributes["allowfullscreen"] = "true"
+					}
+				}
+			}
+
+			embedYoutube(videoId = "zp_S2Uwjb-M")
+			embedYoutube(videoId = "usGPK2hHomI")
+			embedYoutube(videoId = "9OHRtUHezTk")
+			embedYoutube(videoId = "ICNtItWYMNE")
 		}
 	}
 }
