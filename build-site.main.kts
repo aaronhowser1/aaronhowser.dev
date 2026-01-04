@@ -126,7 +126,7 @@ writePage("index.html") {
 				+"."
 			}
 
-			hr {  }
+			hr { }
 
 			ul {
 				li {
@@ -145,4 +145,175 @@ writePage("index.html") {
 		}
 	}
 
+}
+
+writePage("modpacks.html") {
+	head {
+		meta(charset = "utf-8")
+		title(content = "My Modpacks")
+		link(rel = "icon", type = "image/png", href = "images/pfp.png")
+
+		ogName("aaronhowser.dev")
+		ogTitle("My Modpacks")
+		ogDescription("My modpacks")
+		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
+		ogUrl("https://aaronhowser.dev/my_modpacks")
+		ogType("website")
+
+		useStyleCss()
+	}
+
+	body {
+		navDiv()
+
+		fun Tag.modpackLink(name: String, cf: String? = null, ftb: String? = null) {
+			+name
+
+			if (!name.last().isWhitespace() && (cf != null || ftb != null)) {
+				+" "
+			}
+
+			if (cf != null) {
+				this@body.a(href = cf) { +"(CurseForge)" }
+				if (ftb != null) {
+					+" "
+				}
+			}
+			if (ftb != null) {
+				this@body.a(href = ftb) { +"(FTB)" }
+			}
+		}
+
+		div {
+			h1 { +"My Modpacks" }
+
+			p { +"I was the sole developer of the following modpacks:" }
+
+			ul {
+				li {
+					modpackLink(
+						name = "FTB Academy 1.12",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-academy",
+						ftb = "https://www.feed-the-beast.com/modpacks/1-ftb-academy-112"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Academy 1.16",
+						ftb = "https://www.feed-the-beast.com/modpacks/88-ftb-academy-116"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB University 1.12",
+						ftb = "https://www.feed-the-beast.com/modpacks/52-ftb-university-112"
+					)
+					ul {
+						li {
+							+"(Won "
+							a(href = "https://www.reddit.com/r/feedthebeast/") { +"/r/feedthebeast" }
+							+"'s \"Best Modpack 2020\" award!)"
+						}
+					}
+				}
+
+				li {
+					modpackLink(
+						name = "FTB University 1.16",
+						ftb = "https://www.feed-the-beast.com/modpacks/90-ftb-university-116"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB University 1.19",
+						ftb = "https://www.feed-the-beast.com/modpacks/108-ftb-university-119"
+					)
+				}
+			}
+
+			p { +"I was a contributor to the following modpacks:" }
+
+			ul {
+				li {
+					modpackLink(
+						name = "FTB Infinity Evolved",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-infinity-evolved",
+						ftb = "https://www.feed-the-beast.com/modpacks/23-ftb-infinity-evolved-17"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Infinity Evolved Skyblock",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-infinity-evolved-skyblock",
+						ftb = "https://www.feed-the-beast.com/modpacks/20-ftb-infinity-evolved-skyblock"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Presents Stoneblock 2",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-presents-stoneblock-2",
+						ftb = "https://www.feed-the-beast.com/modpacks/4-ftb-presents-stoneblock-2"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Continuum",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-continuum",
+						ftb = "https://www.feed-the-beast.com/modpacks/34-ftb-continuum"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Arcanum Institute",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-arcanum-institute",
+						ftb = "https://www.feed-the-beast.com/modpacks/115-ftb-arcanum-institute"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Stoneblock 3",
+						ftb = "https://www.feed-the-beast.com/modpacks/100-ftb-stoneblock-3",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-stoneblock-3"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Inferno",
+						cf = "https://www.curseforge.com/minecraft/modpacks/ftb-inferno",
+						ftb = "https://www.feed-the-beast.com/modpacks/99-ftb-inferno"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Plexiglass Mountain",
+						ftb = "https://www.feed-the-beast.com/modpacks/96-ftb-plexiglass-mountain"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Skies",
+						ftb = "https://www.feed-the-beast.com/modpacks/103-ftb-skies"
+					)
+				}
+
+				li {
+					modpackLink(
+						name = "FTB Legend of the Eyes",
+						ftb = "https://www.feed-the-beast.com/modpacks/102-ftb-legend-of-the-eyes"
+					)
+				}
+			}
+		}
+	}
 }
