@@ -37,6 +37,8 @@ fun FlowOrMetaDataOrPhrasingContent.ogImage(imageUrl: String, width: Int, height
 	property("og:image:height", height.toString())
 }
 
+fun FlowOrMetaDataOrPhrasingContent.useStyleCss() = link(rel = "stylesheet", href = "/style.css")
+
 fun FlowContent.navDiv() {
 	div {
 		nav {
@@ -49,7 +51,7 @@ fun FlowContent.navDiv() {
 	}
 }
 
-writePage("test.html") {
+writePage("index.html") {
 	head {
 		meta(charset = "utf-8")
 		title(content = "Homepage")
@@ -62,7 +64,7 @@ writePage("test.html") {
 		ogUrl("https://aaronhowser.dev")
 		ogType("website")
 
-		link(rel = "stylesheet", href = "/style.css")
+		useStyleCss()
 	}
 
 	body {
@@ -84,8 +86,8 @@ writePage("test.html") {
 			}
 
 			ul {
-				li { +"Kotlin: 2+ years" }
-				li { +"Java: 4+ years" }
+				li { +"Kotlin: 4+ years" }
+				li { +"Java: 6+ years" }
 				li { +"JavaScript: 5+ years" }
 				li { +"TypeScript: <1 year" }
 			}
@@ -94,6 +96,8 @@ writePage("test.html") {
 				+"As you've probably noticed, neither HTML nor CSS are on that list."
 			}
 		}
+
+		hr { }
 
 		div {
 			h1 { +"Projects" }
@@ -109,17 +113,34 @@ writePage("test.html") {
 			}
 
 			p {
-				+"I've also worked on several mods, which are mainly programmed in Kotlin. See them at the "
+				+"Since then, I've moved on to making Minecraft mods, which involves more in-depth programming in Java and Kotlin. You can see them all at the "
 				a(href = "mods.html") { +"mods page" }
 				+"."
 			}
 
-			a(href = "https://www.curseforge.com/members/aaronhowser1/projects") {
-				+"My CurseForge"
+			p {
+				+"I also currently work for "
+				a(href = "https://www.youtube.com/@MrBeastGaming") { +"MrBeast Gaming" }
+				+", making custom mods for their videos. You can see each video that I've worked on at the "
+				a(href = "videos.html") { +"videos page" }
+				+"."
 			}
-			br
-			a(href = "https://github.com/aaronhowser1") {
-				+"My GitHub"
+
+			hr {  }
+
+			ul {
+				li {
+					a(href = "https://modrinth.com/user/aaronhowser1") { +"My Modrinth" }
+				}
+				li {
+					a(href = "https://www.curseforge.com/members/aaronhowser1/projects") { +"My CurseForge" }
+				}
+				li {
+					a(href = "https://github.com/aaronhowser1") { +"My GitHub" }
+				}
+				li {
+					a(href = "https://github.com/Berry-Club") { +"My GitHub Organization" }
+				}
 			}
 		}
 	}
