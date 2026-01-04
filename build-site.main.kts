@@ -3,6 +3,7 @@
 
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
@@ -12,8 +13,10 @@ fun writePage(fileName: String, block: HTML.() -> Unit) {
 	Files.writeString(
 		Path.of(fileName),
 		"<!DOCTYPE html>\n$html",
+		StandardCharsets.UTF_8,
 		StandardOpenOption.CREATE,
-		StandardOpenOption.TRUNCATE_EXISTING
+		StandardOpenOption.TRUNCATE_EXISTING,
+		StandardOpenOption.WRITE
 	)
 
 	println("Wrote $fileName")
@@ -39,6 +42,29 @@ fun FlowOrMetaDataOrPhrasingContent.ogImage(imageUrl: String, width: Int, height
 
 fun FlowOrMetaDataOrPhrasingContent.useStyleCss() = link(rel = "stylesheet", href = "/style.css")
 
+fun HEAD.commonHead(
+	pageTitle: String,
+	ogTitleText: String,
+	ogDescriptionText: String,
+	ogUrlText: String,
+	ogImageUrl: String = "https://aaronhowser.dev/images/pfp.png",
+	ogImageW: Int = 48,
+	ogImageH: Int = 48
+) {
+	meta(charset = "utf-8")
+	title(content = pageTitle)
+	link(rel = "icon", type = "image/png", href = "images/pfp.png")
+
+	ogName("aaronhowser.dev")
+	ogTitle(ogTitleText)
+	ogDescription(ogDescriptionText)
+	ogImage(ogImageUrl, ogImageW, ogImageH)
+	ogUrl(ogUrlText)
+	ogType("website")
+
+	useStyleCss()
+}
+
 fun FlowContent.navDiv() {
 	div {
 		nav {
@@ -55,18 +81,12 @@ fun FlowContent.navDiv() {
 
 writePage("index.html") {
 	head {
-		meta(charset = "utf-8")
-		title(content = "Homepage")
-		link(rel = "icon", type = "image/png", href = "images/pfp.png")
-
-		ogName("aaronhowser.dev")
-		ogTitle("Homepage")
-		ogDescription("The home page for aaronhowser.dev")
-		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
-		ogUrl("https://aaronhowser.dev")
-		ogType("website")
-
-		useStyleCss()
+		commonHead(
+			pageTitle = "Homepage",
+			ogTitleText = "Homepage",
+			ogDescriptionText = "The home page for aaronhowser.dev",
+			ogUrlText = "https://aaronhowser.dev/"
+		)
 	}
 
 	body {
@@ -151,18 +171,12 @@ writePage("index.html") {
 
 writePage("modpacks.html") {
 	head {
-		meta(charset = "utf-8")
-		title(content = "My Modpacks")
-		link(rel = "icon", type = "image/png", href = "images/pfp.png")
-
-		ogName("aaronhowser.dev")
-		ogTitle("My Modpacks")
-		ogDescription("My modpacks")
-		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
-		ogUrl("https://aaronhowser.dev/my_modpacks")
-		ogType("website")
-
-		useStyleCss()
+		commonHead(
+			pageTitle = "My Modpacks",
+			ogTitleText = "My Modpacks",
+			ogDescriptionText = "My modpacks",
+			ogUrlText = "https://aaronhowser.dev/modpacks.html"
+		)
 	}
 
 	body {
@@ -322,18 +336,12 @@ writePage("modpacks.html") {
 
 writePage("mods.html") {
 	head {
-		meta(charset = "utf-8")
-		title(content = "My Mods")
-		link(rel = "icon", type = "image/png", href = "images/pfp.png")
-
-		ogName("aaronhowser.dev")
-		ogTitle("My Mods")
-		ogDescription("My mods")
-		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
-		ogUrl("https://aaronhowser.dev/my_mods")
-		ogType("website")
-
-		useStyleCss()
+		commonHead(
+			pageTitle = "My Mods",
+			ogTitleText = "My Mods",
+			ogDescriptionText = "My mods",
+			ogUrlText = "https://aaronhowser.dev/mods.html"
+		)
 	}
 
 	body {
@@ -419,18 +427,12 @@ writePage("mods.html") {
 
 writePage("videos.html") {
 	head {
-		meta(charset = "utf-8")
-		title(content = "Homepage")
-		link(rel = "icon", type = "image/png", href = "images/pfp.png")
-
-		ogName("aaronhowser.dev")
-		ogTitle("My videos")
-		ogDescription("Videos I've worked on")
-		ogImage("https://aaronhowser.dev/images/pfp.png", 48, 48)
-		ogUrl("https://aaronhowser.dev")
-		ogType("website")
-
-		useStyleCss()
+		commonHead(
+			pageTitle = "Videos I've Worked On",
+			ogTitleText = "My videos",
+			ogDescriptionText = "Videos I've worked on",
+			ogUrlText = "https://aaronhowser.dev/videos.html"
+		)
 	}
 
 	body {
