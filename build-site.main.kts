@@ -65,21 +65,26 @@ fun HEAD.commonHead(
 	useStyleCss()
 }
 
+val indexPage = "index.html"
+val modpacksPage = "modpacks.html"
+val modsPage = "mods.html"
+val videosPage = "videos.html"
+
 fun FlowContent.navDiv() {
 	div {
 		nav {
-			a(href = "index.html") { +"Home" }
+			a(href = indexPage) { +"Home" }
 			+" | "
-			a(href = "modpacks.html") { +"My Modpacks" }
+			a(href = modpacksPage) { +"My Modpacks" }
 			+" | "
-			a(href = "mods.html") { +"My Mods" }
+			a(href = modsPage) { +"My Mods" }
 			+" | "
-			a(href = "videos.html") { +"Videos I've Worked On" }
+			a(href = videosPage) { +"Videos I've Worked On" }
 		}
 	}
 }
 
-writePage("index.html") {
+writePage(indexPage) {
 	head {
 		commonHead(
 			pageTitle = "Homepage",
@@ -130,13 +135,13 @@ writePage("index.html") {
 
 			p {
 				+"You can see the modpacks I've worked on at the "
-				a(href = "modpacks.html") { +"modpacks page" }
+				a(href = modpacksPage) { +"modpacks page" }
 				+"."
 			}
 
 			p {
 				+"Since then, I've moved on to making Minecraft mods, which involves more in-depth programming in Java and Kotlin. You can see them all at the "
-				a(href = "mods.html") { +"mods page" }
+				a(href = modsPage) { +"mods page" }
 				+"."
 			}
 
@@ -144,7 +149,7 @@ writePage("index.html") {
 				+"I also currently work for "
 				a(href = "https://www.youtube.com/@MrBeastGaming") { +"MrBeast Gaming" }
 				+", making custom mods for their videos. You can see each video that I've worked on at the "
-				a(href = "videos.html") { +"videos page" }
+				a(href = videosPage) { +"videos page" }
 				+"."
 			}
 
@@ -169,7 +174,7 @@ writePage("index.html") {
 
 }
 
-writePage("modpacks.html") {
+writePage(modpacksPage) {
 	head {
 		commonHead(
 			pageTitle = "My Modpacks",
@@ -334,7 +339,7 @@ writePage("modpacks.html") {
 	}
 }
 
-writePage("mods.html") {
+writePage(modsPage) {
 	head {
 		commonHead(
 			pageTitle = "My Mods",
@@ -425,7 +430,7 @@ writePage("mods.html") {
 	}
 }
 
-writePage("videos.html") {
+writePage(videosPage) {
 	head {
 		commonHead(
 			pageTitle = "Videos I've Worked On",
