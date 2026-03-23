@@ -75,9 +75,9 @@ fun FlowContent.navDiv() {
 		nav {
 			a(href = indexPage) { +"Home" }
 			+" | "
-			a(href = modpacksPage) { +"My Modpacks" }
-			+" | "
 			a(href = modsPage) { +"My Mods" }
+			+" | "
+			a(href = modpacksPage) { +"My Modpacks" }
 			+" | "
 			a(href = videosPage) { +"Videos I've Worked On" }
 		}
