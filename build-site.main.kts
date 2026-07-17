@@ -8,10 +8,18 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 
+val SITE_URL = "https://aaronhowser.dev"
+val SITE_NAME = "aaronhowser.dev"
+val DEFAULT_IMAGE_URL = "$SITE_URL/images/pfp.png"
+
 fun writePage(fileName: String, block: HTML.() -> Unit) {
+	require(fileName.endsWith(".html")) { "Page output must be an HTML file: $fileName" }
+
 	val html = createHTML().html(block = block)
+	val outputPath = Path.of(fileName)
+	outputPath.parent?.let { Files.createDirectories(it) }
 	Files.writeString(
-		Path.of(fileName),
+		outputPath,
 		"<!DOCTYPE html>\n$html",
 		StandardCharsets.UTF_8,
 		StandardOpenOption.CREATE,
@@ -34,10 +42,11 @@ fun FlowOrMetaDataOrPhrasingContent.ogTitle(content: String) = property("og:titl
 fun FlowOrMetaDataOrPhrasingContent.ogDescription(content: String) = property("og:description", content)
 fun FlowOrMetaDataOrPhrasingContent.ogUrl(content: String) = property("og:url", content)
 fun FlowOrMetaDataOrPhrasingContent.ogType(content: String) = property("og:type", content)
-fun FlowOrMetaDataOrPhrasingContent.ogImage(imageUrl: String, width: Int, height: Int) {
+fun FlowOrMetaDataOrPhrasingContent.ogImage(imageUrl: String, width: Int, height: Int, alt: String) {
 	property("og:image", imageUrl)
 	property("og:image:width", width.toString())
 	property("og:image:height", height.toString())
+	property("og:image:alt", alt)
 }
 
 fun FlowOrMetaDataOrPhrasingContent.useStyleCss() = link(rel = "stylesheet", href = "/style.css")
@@ -47,20 +56,26 @@ fun HEAD.commonHead(
 	ogTitleText: String,
 	ogDescriptionText: String,
 	ogUrlText: String,
-	ogImageUrl: String = "https://aaronhowser.dev/images/pfp.png",
+	ogImageUrl: String = DEFAULT_IMAGE_URL,
 	ogImageW: Int = 48,
-	ogImageH: Int = 48
+	ogImageH: Int = 48,
+	ogImageAlt: String = "Aaron Howser"
 ) {
 	meta(charset = "utf-8")
+	meta(name = "viewport", content = "width=device-width, initial-scale=1")
+	meta(name = "description", content = ogDescriptionText)
 	title(content = pageTitle)
-	link(rel = "icon", type = "image/png", href = "images/pfp.png")
+	link(rel = "canonical", href = ogUrlText)
+	link(rel = "icon", type = "image/png", href = "/images/pfp.png")
 
-	ogName("aaronhowser.dev")
+	ogName(SITE_NAME)
 	ogTitle(ogTitleText)
 	ogDescription(ogDescriptionText)
-	ogImage(ogImageUrl, ogImageW, ogImageH)
+	ogImage(ogImageUrl, ogImageW, ogImageH, ogImageAlt)
 	ogUrl(ogUrlText)
 	ogType("website")
+	property("og:locale", "en_US")
+	meta(name = "twitter:card", content = "summary")
 
 	useStyleCss()
 }
@@ -70,21 +85,29 @@ val modpacksPage = "modpacks.html"
 val modsPage = "mods.html"
 val videosPage = "videos.html"
 
-fun FlowContent.navDiv() {
-	div {
-		nav {
-			a(href = indexPage) { +"Home" }
-			+" | "
-			a(href = modsPage) { +"My Mods" }
-			+" | "
-			a(href = modpacksPage) { +"My Modpacks" }
-			+" | "
-			a(href = videosPage) { +"Videos I've Worked On" }
+fun FlowContent.siteNav(currentPage: String) {
+	nav {
+		attributes["aria-label"] = "Main navigation"
+
+		fun navLink(href: String, label: String) {
+			a(href = href) {
+				if (href == currentPage) attributes["aria-current"] = "page"
+				+label
+			}
 		}
+
+		navLink(indexPage, "Home")
+		+" | "
+		navLink(modsPage, "My Mods")
+		+" | "
+		navLink(modpacksPage, "My Modpacks")
+		+" | "
+		navLink(videosPage, "Videos I've Worked On")
 	}
 }
 
 writePage(indexPage) {
+	attributes["lang"] = "en"
 	head {
 		commonHead(
 			pageTitle = "Homepage",
@@ -95,7 +118,7 @@ writePage(indexPage) {
 	}
 
 	body {
-		navDiv()
+		siteNav(indexPage)
 
 		div {
 			style = "text-align: center"
@@ -106,7 +129,7 @@ writePage(indexPage) {
 		}
 
 		div {
-			h1 { +"About Me" }
+			h2 { +"About Me" }
 
 			p {
 				+"I am a software developer who's worked on a variety of projects, in a variety of languages."
@@ -127,7 +150,7 @@ writePage(indexPage) {
 		hr { }
 
 		div {
-			h1 { +"Projects" }
+			h2 { +"Projects" }
 
 			p {
 				+"I got my start working on Minecraft modpacks, which is mainly creative design and planning, writing documentation, and programming in JavaScript."
@@ -175,6 +198,7 @@ writePage(indexPage) {
 }
 
 writePage(modpacksPage) {
+	attributes["lang"] = "en"
 	head {
 		commonHead(
 			pageTitle = "My Modpacks",
@@ -185,7 +209,7 @@ writePage(modpacksPage) {
 	}
 
 	body {
-		navDiv()
+		siteNav(modpacksPage)
 
 		fun Tag.modpackLink(name: String, cf: String? = null, ftb: String? = null) {
 			+name
@@ -340,6 +364,7 @@ writePage(modpacksPage) {
 }
 
 writePage(modsPage) {
+	attributes["lang"] = "en"
 	head {
 		commonHead(
 			pageTitle = "My Mods",
@@ -350,7 +375,7 @@ writePage(modsPage) {
 	}
 
 	body {
-		navDiv()
+		siteNav(modsPage)
 
 		div {
 			h1 { +"My Mods" }
@@ -431,6 +456,7 @@ writePage(modsPage) {
 }
 
 writePage(videosPage) {
+	attributes["lang"] = "en"
 	head {
 		commonHead(
 			pageTitle = "Videos I've Worked On",
@@ -441,7 +467,7 @@ writePage(videosPage) {
 	}
 
 	body {
-		navDiv()
+		siteNav(videosPage)
 
 		div {
 			h1 { +"Videos I've Worked On" }
@@ -454,6 +480,7 @@ writePage(videosPage) {
 
 			fun embedYoutube(
 				videoId: String,
+				title: String,
 				width: Int = 560,
 				height: Int = 315
 			) {
@@ -463,25 +490,27 @@ writePage(videosPage) {
 						this.width = width.toString()
 						this.height = height.toString()
 						this.src = "https://www.youtube.com/embed/$videoId"
-						attributes["title"] = "YouTube video player"
+						attributes["title"] = title
 						attributes["frameborder"] = "0"
+						attributes["loading"] = "lazy"
+						attributes["referrerpolicy"] = "strict-origin-when-cross-origin"
 						attributes["allow"] = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						attributes["allowfullscreen"] = "true"
 					}
 				}
 			}
 
-			embedYoutube(videoId = "zp_S2Uwjb-M")
+			embedYoutube(videoId = "zp_S2Uwjb-M", title = "MrBeast Gaming video")
 			p {}
-			embedYoutube(videoId = "usGPK2hHomI")
+			embedYoutube(videoId = "usGPK2hHomI", title = "MrBeast Gaming video")
 			p {}
-			embedYoutube(videoId = "9OHRtUHezTk")
+			embedYoutube(videoId = "9OHRtUHezTk", title = "MrBeast Gaming video")
 			p {}
-			embedYoutube(videoId = "ICNtItWYMNE")
+			embedYoutube(videoId = "ICNtItWYMNE", title = "MrBeast Gaming video")
 			p {}
-			embedYoutube(videoId = "wyKNY1_HnTc")
+			embedYoutube(videoId = "wyKNY1_HnTc", title = "MrBeast Gaming video")
 			p {}
-			embedYoutube(videoId = "Caxv8tLATnc")
+			embedYoutube(videoId = "Caxv8tLATnc", title = "MrBeast Gaming video")
 		}
 	}
 }
